@@ -1,0 +1,14 @@
+{
+    "name": "andysad/program01",
+    "type": "project",
+    "authors": [
+        {
+            "name": "AndySad",
+            "email": "AndySad@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "phpoffice/phpword": "v0.13.*"
+    }
+}
