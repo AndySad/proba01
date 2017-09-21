@@ -1,4 +1,5 @@
 <?php
+
 class zebranie{
 	private $tydzien_od;
 	private $rozdzialy;
@@ -17,6 +18,10 @@ class zebranie{
 		$this->tydzien_od = $zebranie_tydzien_od;
 	}
 	*/
+	function get_tydzien_od_z_BAZY($tydzien_od){
+		echo "<h1>Wybrany tydzień ma numer $tydzien_od</h1>";
+
+	}
 	function set_tydzien_od($nowy_tydzien_od){
 		$this->tydzien_od = $nowy_tydzien_od;
 	}
