@@ -9,6 +9,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "phpoffice/phpword": "v0.13.*"
+        "phpoffice/phpword": "v0.13.*",
+        "nesbot/carbon": "^1.23@dev"
     }
 }

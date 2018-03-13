@@ -9,8 +9,12 @@
 </head>
 <body> 
 <?php
+require 'vendor/autoload.php';
+require_once 'bootstrap.php';
 require 'connect.php';
+include "LIB/konfiguracja.php";
 include "LIB/zebranie.php";
+include "LIB/funkcje.php";
 global $dbo;
 date_default_timezone_set("Europe/Warsaw");
 // define variables and set to empty values
@@ -22,7 +26,9 @@ $tydzien_od="";
 	$zycie=array(); //plan części CHRZEŚCIJAŃSKI TRYB ŻYCIA
 	$piesni=array();
 
+$konfiguracja=new konfiguracja('Warszawa-Bielany',3,18,30);
 $zebranie=new zebranie();
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if (empty($_POST["programCaly"])) {
@@ -34,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 function podziel_zebrania($data){
+	global $konfiguracja;
 	if (empty($data)) {
 		$program=array();
 	} else {
@@ -52,7 +59,14 @@ function podziel_zebrania($data){
 	//print_r($program);
 	//$dzien_zebrania=$pierwszy_dzien_tygodnia->add(new DateInterval('P2D'));
 	//$zebranie->tydzien_od=daj_tydzien($program[0])->format('Y-m-d');
-	$zebranie->set_tydzien_od(daj_tydzien($program[0]));
+	$zebranie->set_tydzien_od(
+		daj_tydzien($program[0]),
+		$konfiguracja->get_zebranie_w_tygodniu_dzien(),
+		$konfiguracja->get_zebranie_w_tygodniu_godzina(),
+		$konfiguracja->get_zebranie_w_tygodniu_minuta()
+	);
+	//echo "daj_tydzien($program[0])<br>";
+	
 	//$zebranie->dzien_zebrania=new DateTime($GLOBALS['tydzien_od']);
 	//$dzien_zebrania=$dzien_zebrania->add(new DateInterval('P2D'))->format('Y-m-d');
 	$zebranie->set_rozdzialy($program[1]);
@@ -81,8 +95,11 @@ function podziel_zebrania($data){
 	}
 	$zycie_stop=$i - 3;
 	$zebranie->set_piesni($GLOBALS['piesni']);
-	$zebranie->set_przemowienie(explode("(",$program[$skarby_start])[0]);
-	$zebranie->set_fragment_biblii($skarby_czytanie);
+
+	$zebranie->set_punkt_skarby(explode("(",$program[$skarby_start])[0],'',10,'');
+	$zebranie->set_punkt_skarby('Wyszukujemy duchowe skarby','',8,'');
+	$zebranie->set_punkt_skarby($skarby_czytanie,'',4,'');
+	//$zebranie->set_przemowienie(explode("(",$program[$skarby_start])[0]);
 	
 	for ($isluzba=$sluzba_start;$isluzba<=$sluzba_stop;$isluzba++){
 		$sluzba_punkt_calosc=explode("(",$program[$isluzba]);
@@ -90,15 +107,20 @@ function podziel_zebrania($data){
 		$sluzba_punkt['opis']=explode("): ",$program[$isluzba])[1];
 			$poczatek_czasu=strrpos(explode("): ",$program[$isluzba])[0],"(");
 		$sluzba_punkt['czas']=explode("(",explode(" min",$program[$isluzba])[0])[1];
-		$zebranie->set_punkt_sluzby($sluzba_punkt);
+		$zebranie->set_punkt_sluzby($sluzba_punkt['nazwa'],$sluzba_punkt['opis'],$sluzba_punkt['czas'],'');
+		//$zebranie->set_punkt_sluzby($sluzba_punkt);
 	}
 	for ($izycie=$zycie_start;$izycie<=$zycie_stop;$izycie++){
 		$zycie_punkt_calosc=explode("(",$program[$izycie]);
 		$zycie_punkt['nazwa']=$zycie_punkt_calosc[0];
+		if ($zycie_punkt['nazwa']=="Potrzeby zboru "){
+			$program[$izycie]=rtrim($program[$izycie]).": "; //potrzeby zboru nie kończą się dwukropkiem - nie ma treści
+		}
 		$zycie_punkt['opis']=explode("): ",$program[$izycie])[1];
 			$poczatek_czasu=strrpos(explode("min): ",$program[$izycie])[0],"(");
 		$zycie_punkt['czas']=substr(explode("min): ",$program[$izycie])[0],$poczatek_czasu + 1);
-		$zebranie->set_punkt_zycia($zycie_punkt);
+		$zebranie->set_punkt_zycia($zycie_punkt['nazwa'],$zycie_punkt['opis'],$zycie_punkt['czas'],'');
+		//$zebranie->set_punkt_zycia($zycie_punkt);
 	}
 	
 	//echo "<i>".daj_sql_tydzien()."</i><br />";
@@ -110,31 +132,6 @@ function podziel_zebrania($data){
 	
 }
 
-function daj_tydzien($tekst){
-	$miesiace=array(
-			'stycznia'=>1,
-			'lutego'=>2,
-			'marca'=>3,
-			'kwietnia'=>4,
-			'maja'=>5,
-			'czerwca'=>6,
-			'lipca'=>7,
-			'sierpnia'=>8,
-			'września'=>9,
-			'października'=>10,
-			'listopada'=>11,
-			'grudnia'=>12
-	);
-	$tablica=explode(" ",rtrim($tekst));
-	$dzien=explode("-",$tablica[0])[0];
-	$miesiac=$tablica[1];
-
-	$pierwszy_dzien_tygodnia=new DateTime(date("Y-m-d", mktime(0, 0, 0, $miesiace[$miesiac], $dzien, date("Y"))));
-	//$dzien_zebrania=$pierwszy_dzien_tygodnia->add(new DateInterval('P2D'));
-	//echo "<br>daj_tydzien...<h1>$tablica[0]</h1>$miesiace[$miesiac]>>".$dzien_zebrania->format('Y-m-d')."<<";
-	//return $dzien_zebrania->format('Y-m-d');
-	return $pierwszy_dzien_tygodnia;
-}
 
 function test_input($data) {
    $data = trim($data);
@@ -147,6 +144,7 @@ function test_input($data) {
 function daj_sql_tydzien(){
 	global $dbo;
 	global $zebranie;
+	global $konfiguracja;
 	//$stmt=$dbo->prepare("delete from tydzien where tydzien_od_data='".$GLOBALS['tydzien_od']."'");
 	//$stmt->execute();
 	//czy istnieje ten tydzień?
@@ -155,20 +153,24 @@ function daj_sql_tydzien(){
 	$stmt_id->execute();
 	$wynik_id=$stmt_id->fetchAll();
 
-	//
+	/*
 	echo "<pre>";
 	print_r($wynik_id);
 	echo "</pre>";
+	*/
 	$tydzien_id=-1;
 	if (isset($wynik_id[0])) {
 		$tydzien_id=$wynik_id[0]["id"];
 		$komentarz=" <span style=\"color:red;font-size:20px;\">DUPLIKAT</span>!";
-		$sql_punkty_wyczysc="DELETE FROM `punkty` WHERE tydzien_id=$tydzien_id;";
-		$stmt=$dbo->prepare($sql_punkty_wyczysc);
+		$sql_wyczysc_punkty_uczestnicy="DELETE FROM `punkty_uczestnicy` WHERE tydzien_id=$tydzien_id;";
+		$stmt=$dbo->prepare($sql_wyczysc_punkty_uczestnicy);
+		$stmt->execute();
+		$sql_wyczysc_punkty="DELETE FROM `punkty` WHERE tydzien_id=$tydzien_id;";
+		$stmt=$dbo->prepare($sql_wyczysc_punkty);
 		$stmt->execute();
 		echo "<br>Usunięto punkty przypisane do zebrania w tygodniu od ".$zebranie->get_tydzien_od()." $komentarz<br>";
 		
-		$sql_tydzien=sprintf("update tydzien set piesn_1=%s,piesn_2=%s,piesn_3=%s,rozdzialy_do_czytania='%s',aktualizacja=now() where id='%s';"
+		$sql_tydzien=sprintf("update tydzien set piesn_1=%s,piesn_2=%s,piesn_3=%s,rozdzialy_do_czytania='%s',updated_at=now() where id='%s';"
 			,$zebranie->get_piesn1()
 			,$zebranie->get_piesn2()
 			,$zebranie->get_piesn3()
@@ -185,6 +187,7 @@ function daj_sql_tydzien(){
 			,$zebranie->get_rozdzialy()
 			);
 	}
+	//echo "<i>$sql_tydzien<br></i>";
 	$stmt=$dbo->prepare($sql_tydzien);
 	try {
 		$stmt->execute();
@@ -196,27 +199,46 @@ function daj_sql_tydzien(){
 	}
 	if (!(isset($wynik_id[0]))) {
 		$tydzien_id=$dbo->lastInsertId();	
+		//dodanie zebrania w weekend w nowym tygodniu
+		$sql_weekend=sprintf("insert into zebraniaWeekend(tydzien_id) values(%s);",$tydzien_id);
+		echo "<i>$sql_weekend</I><br>";
+		$stmt=$dbo->prepare($sql_weekend);
+		try {
+			$stmt->execute();
+		}
+		catch (PDOException $e){
+			echo "<h1 style=\"color:red\">Nie udało się zapisać programu na weekend od '".$zebranie->get_tydzien_od()."'</h1>";
+			echo $stmt->errorCode();
+			die($e->getMessage());
+		}		
 	}
 	echo "<br>tydzień od ".$zebranie->get_tydzien_od()." został oznaczony identyfikatorem: <span style=\"color:blue;font-size:20px;\">$tydzien_id</span>$komentarz<br>";
 	zapisz_punkty_zebrania($tydzien_id,$zebranie);
-	return $sql_tydzien;
+	//return $sql_tydzien;
 }
 function zapisz_punkty_zebrania($tydzien_id,$zebranie){
+	global $konfiguracja;
+	global $dbo;
 	//SKARBY ZE SŁOWA BOŻEGO
-	zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"SKARBY",$zebranie->get_przemowienie(),10,null));
-	zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"SKARBY","Wyszukujemy duchowe skarby",8,null));
-	zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"SKARBY",$zebranie->get_fragment_biblii(),4,null));
+	foreach($zebranie->get_punkty_skarby() as $skarby_punkt){
+		zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"SKARBY",
+			$skarby_punkt['tytul'],$skarby_punkt['czas'],$skarby_punkt['opis'])
+		);
+		zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
+	}
 	//ULEPSZAJMY SWĄ SŁUŻBĘ
 	foreach($zebranie->get_punkty_sluzby() as $sluzba_punkt){
 		zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"SŁUŻBA",
-			$sluzba_punkt['nazwa'],$sluzba_punkt['czas'],$sluzba_punkt['opis'])
+			$sluzba_punkt['tytul'],$sluzba_punkt['czas'],$sluzba_punkt['opis'])
 		);
+		zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
 	}
 	//CHRZEŚCIJAŃSKI TRYB ŻYCIA
 	foreach($zebranie->get_punkty_zycia() as $zycie_punkt){
 		zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"ŻYCIE",
-			$zycie_punkt['nazwa'],$zycie_punkt['czas'],$zycie_punkt['opis'])
+			$zycie_punkt['tytul'],$zycie_punkt['czas'],$zycie_punkt['opis'])
 		);
+		zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
 	}
 }
 function zapisz_punkt($sql_punkt){

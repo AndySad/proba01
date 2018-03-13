@@ -19,7 +19,7 @@ function daj_tydzien($tekst){
 	$dzien=explode("-",$tablica[0])[0];
 	$miesiac=$tablica[1];
 	//echo date("Y-m-d", mktime(0, 0, 0, $miesiace[$miesiac], $dzien, date("Y")));
-	$pierwszy_dzien_tygodnia=new DateTime(date("Y-m-d", mktime(0, 0, 0, $miesiace[$miesiac], $dzien, date("Y"))));
+	$pierwszy_dzien_tygodnia=new Carbon\Carbon(date("Y-m-d", mktime(0, 0, 0, $miesiace[$miesiac], $dzien, date("Y"))));
 	//$dzien_zebrania=$pierwszy_dzien_tygodnia->add(new DateInterval('P2D'));
 	//echo "<br>daj_tydzien...<h1>$tablica[0]</h1>$miesiace[$miesiac]>>".$dzien_zebrania->format('Y-m-d')."<<";
 	//return $dzien_zebrania->format('Y-m-d');

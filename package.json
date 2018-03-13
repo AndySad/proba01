@@ -1,0 +1,21 @@
+{
+  "name": "proba01",
+  "version": "1.0.0",
+  "description": "\"# proba01\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndySad/proba01.git"
+  },
+  "author": "AndySad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndySad/proba01/issues"
+  },
+  "homepage": "https://github.com/AndySad/proba01#readme",
+  "dependencies": {
+  }
+}

@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\Carbon;
+//Carbon::setLocale('pl');
+
 class zebranie{
 	private $tydzien_od;
 	private $rozdzialy;
@@ -9,6 +12,7 @@ class zebranie{
 	private $zycie;
 	private $przewodniczacy;
 	private $modlitwa;
+	private $aktualny_czas;
 	
 	function __construct(){
 		;
@@ -19,11 +23,14 @@ class zebranie{
 	}
 	*/
 	function get_tydzien_od_z_BAZY($tydzien_od){
-		echo "<h1>Wybrany tydzień ma numer $tydzien_od</h1>";
-
+		;//echo "<h3>Wybrany tydzień ma numer $tydzien_od</h3>";
 	}
-	function set_tydzien_od($nowy_tydzien_od){
+	function set_tydzien_od($nowy_tydzien_od,$chzis_dzien,$chzis_godzina,$chzis_minuta){
+		//echo "set_tydzien_od($nowy_tydzien_od,$chzis_dzien,$chzis_godzina,$chzis_minuta)";
 		$this->tydzien_od = $nowy_tydzien_od;
+		$this->aktualny_czas=Carbon::parse($nowy_tydzien_od);
+		$this->aktualny_czas->addDays(--$chzis_dzien)->setTime($chzis_godzina,$chzis_minuta,0);
+		//echo "set_tydzien_od->aktualny_czas: $this->tydzien_od $this->aktualny_czas";
 	}
 	
 	public function get_tydzien_od(){
@@ -31,7 +38,7 @@ class zebranie{
 	}
 
 	public function get_dzien_zebrania(){
-		return $this->tydzien_od->add(new DateInterval('P2D'))->format('d-m');
+		return $this->aktualny_czas->format('d-m');
 	}
 
 	public function set_rozdzialy($rozdzialy){
@@ -41,20 +48,6 @@ class zebranie{
 		return $this->rozdzialy;
 	}
 
-	public function set_przemowienie($przemowienie){
-		$this->skarby=array();
-		array_push($this->skarby,$przemowienie);
-	}
-	public function get_przemowienie(){
-		return $this->skarby[0];
-	}
-	
-	public function set_fragment_biblii($fragment_biblii){
-		array_push($this->skarby,$fragment_biblii);
-	}
-	public function get_fragment_biblii(){
-		return $this->skarby[1];
-	}
 	
 	public function set_piesni($piesni){
 		$this->piesni = $piesni;
@@ -69,21 +62,53 @@ class zebranie{
 		return $this->piesni[2];
 	}
 
-	public function set_punkt_sluzby($punkt_sluzby){
+	public function set_punkt_skarby($tytul,$opis,$czas,$prowadzacy){
+		if (empty($this->skarby)) {
+			$this->skarby=array();
+		}
+		array_push(
+			$this->skarby,
+			array(
+				"tytul"=>$tytul,
+				"uczestnik"=>$prowadzacy,
+				"czas"=>$czas,
+				"opis"=>$opis
+			)); 
+	}
+	public function get_punkty_skarby(){
+		return $this->skarby;
+	}
+	public function set_punkt_sluzby($tytul,$opis,$czas,$prowadzacy,$pomocnik=""){
 		if (empty($this->sluzba)) {
 			$this->sluzba=array();
 		}
-		array_push($this->sluzba,$punkt_sluzby);
+		array_push(
+			$this->sluzba,
+			array(
+				"tytul"=>$tytul,
+				"uczestnik"=>$prowadzacy,
+				"czas"=>$czas,
+				"pomocnik"=>$pomocnik,
+				"opis"=>$opis
+			)); 
 	}
 	public function get_punkty_sluzby(){
 		return $this->sluzba;
 	}
 
-	public function set_punkt_zycia($punkt_zycia){
+	public function set_punkt_zycia($tytul,$opis,$czas,$prowadzacy,$pomocnik=""){
 		if (empty($this->zycie)) {
 			$this->zycie=array();
 		}
-		array_push($this->zycie,$punkt_zycia);
+		array_push(
+			$this->zycie,
+			array(
+				"tytul"=>$tytul,
+				"uczestnik"=>$prowadzacy,
+				"czas"=>$czas,
+				"pomocnik"=>$pomocnik,
+				"opis"=>$opis
+			)); 
 	}
 	public function get_punkty_zycia(){
 		return $this->zycie;
@@ -102,6 +127,13 @@ class zebranie{
 	public function get_modlitwa(){
 		return $this->modlitwa;
 	}
-
+	
+	public function get_aktualny_czas(){
+		return $this->aktualny_czas->format('H:i');
+	}
+	public function set_aktualny_czas($czas_punktu){
+		$this->aktualny_czas=$this->aktualny_czas->addMinutes($czas_punktu);
+	}
+	
 }
 ?>
