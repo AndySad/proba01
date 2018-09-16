@@ -14,7 +14,7 @@ $formatKropki=array('name'=>'Symbol','size'=>12);
 $fontTytul=array('name'=>'Calibri','size'=>11);
 $fontProwadzacy=array('name'=>'Calibri','size'=>10);
 $fontCzas=array('name'=>'Calibri','size'=>7,'color'=>'A4A4A4');
-$fontRola=array('name'=>'Calibri','size'=>8,'color'=>'A4A4A4');
+$fontRola=array('name'=>'Calibri','size'=>8,'color'=>'A4A4A4','textAlignment'=>'right');
 //          \_FORMATOWANIE AKAPITÓW
 $akapitTytul=array('align'=>'left');
 $akapitRola=array('align'=>'right');

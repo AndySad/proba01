@@ -120,9 +120,11 @@ include "widoki/ch.z.is.02.wstep.php";
 //wyszukujemy duchowe skarby
 include "widoki/ch.z.is.03.skarby.php";
 //ulepszajmy swą służbę
-include "widoki/ch.z.is.04.sluzba.php";
+//include "widoki/ch.z.is.04.sluzba.php";
+include "widoki/ch.z.is.04A.sluzba.php";
 //chrześcijańskie życie
-include "widoki/ch.z.is.05.zycie.php";
+//include "widoki/ch.z.is.05.zycie.php";
+include "widoki/ch.z.is.05A.zycie.php";
 /*
 			echo "<pre>";
 			print_r($zebranie);
