@@ -103,6 +103,8 @@ require_once 'bootstrap.php';
 include "widoki/z.n.01.wprowadzenie.php";
 //wykład
 include "widoki/z.n.02.wyklad.php";
+//Strażnica
+include "widoki/z.n.03.straznica.php";
 /*
 //ulepszajmy swą służbę
 include "widoki/ch.z.is.04.sluzba.php";
