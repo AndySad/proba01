@@ -29,12 +29,15 @@ require_once 'bootstrap.php';
 
 	<style>
 		.error {color: #FF0000;}
+		.skarby={color: #5A6A70;}
+		.sluzba={color: #C18626;}
+		.zycie={color: #961526;}
 	</style>
 </head>
 <body> 
 	<div class="container">
 		<div class="page-header">
-			<h1>Plan Zebrań w Tygodniu</h1>
+			<h4>Plan Zebrań w Tygodniu</h4>
 		</div>
 		<div class="col-md-6"><!--treść planu zebrań - POCZATEK-->
 		

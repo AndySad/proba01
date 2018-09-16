@@ -25,7 +25,7 @@ $table = $section->addTable('czesci-tablica');
             $table->addCell($dlPoleCzas,array('valign' => 'center'))->addText($zebranie->get_aktualny_czas(),$fontCzas,$akapitCzas);
             $uczestnik=$punkt['uczestnik'];
             if ($punkt['pomocnik'] != '') {   //zborowe studium Biblii
-                $uczestnik.="\n".$punkt['[pomocnik]'];
+                $uczestnik.="\n".$punkt['pomocnik'];
                 $etykieta="Prowadzący\nLektor:";
                 $punktZycie=$table->addCell($dlPoleTytulKrotki,array('valign' => 'center'))->addTextRun();
                     $punktZycie->addText(' ', $formatKropki);

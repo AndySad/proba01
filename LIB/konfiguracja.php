@@ -4,12 +4,20 @@ class konfiguracja{
 	private $zebranie_w_tygodniu_dzien;
 	private $zebranie_w_tygodniu_godzina;
 	private $zebranie_w_tygodniu_minuta;
+	private $zebranie_w_weekend_dzien;
+	private $zebranie_w_weekend_godzina;
+	private $zebranie_w_weekend_minuta;
 
-	function __construct($nazwa,$chzis_dzien,$chzis_godzina,$chzis_minuta){
+	function __construct($nazwa,$chzis,$zn){
 		$this->zbor=$nazwa;
-		$this->zebranie_w_tygodniu_dzien=$chzis_dzien;
-		$this->zebranie_w_tygodniu_godzina=$chzis_godzina;
-		$this->zebranie_w_tygodniu_minuta=$chzis_minuta;
+		//$chzis - array($chzis_dzien,$chzis_godzina,$chzis_minuta)
+		$this->zebranie_w_tygodniu_dzien=$chzis[0];
+		$this->zebranie_w_tygodniu_godzina=$chzis[1];
+		$this->zebranie_w_tygodniu_minuta=$chzis[2];
+		//$zn    - array($zn_dzien,$zn_godzina,$zn_minuta)
+		$this->zebranie_w_weekend_dzien=$zn[0];
+		$this->zebranie_w_weekend_godzina=$zn[1];
+		$this->zebranie_w_weekend_minuta=$zn[2];
 	}
 	function get_zbor(){
 		return $this->zbor;
@@ -23,6 +31,15 @@ class konfiguracja{
 	}
 	function get_zebranie_w_tygodniu_minuta(){
 		return $this->zebranie_w_tygodniu_minuta;
+	}
+	function get_zebranie_w_weekend_dzien(){
+		return $this->zebranie_w_weekend_dzien;
+	}
+	function get_zebranie_w_weekend_godzina(){
+		return $this->zebranie_w_weekend_godzina;
+	}
+	function get_zebranie_w_weekend_minuta(){
+		return $this->zebranie_w_weekend_minuta;
 	}
 	
 }

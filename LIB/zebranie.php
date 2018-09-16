@@ -29,8 +29,8 @@ class zebranie{
 		//echo "set_tydzien_od($nowy_tydzien_od,$chzis_dzien,$chzis_godzina,$chzis_minuta)";
 		$this->tydzien_od = $nowy_tydzien_od;
 		$this->aktualny_czas=Carbon::parse($nowy_tydzien_od);
-		$this->aktualny_czas->addDays(--$chzis_dzien)->setTime($chzis_godzina,$chzis_minuta,0);
-		//echo "set_tydzien_od->aktualny_czas: $this->tydzien_od $this->aktualny_czas";
+		$this->aktualny_czas=$this->aktualny_czas->addDays(--$chzis_dzien)->setTime($chzis_godzina,$chzis_minuta,0);
+		echo "set_tydzien_od->aktualny_czas: $this->tydzien_od $this->aktualny_czas";
 	}
 	
 	public function get_tydzien_od(){
