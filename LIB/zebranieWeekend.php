@@ -43,7 +43,14 @@ class zebranieWeekend{
 	}
 
 	public function get_dzien_zebrania(){
-		return $this->aktualny_czas->format('d-m');
+		$miesiace=array("stycznia","lutego","marca","kwietnia","maja","czerwca",
+						"lipca","sierpnia","września","października","listopada","grudnia");
+		$nazwaMiesiaca=$miesiace[($this->aktualny_czas->month - 1)];
+		$dzienMiesiaca=$this->aktualny_czas->day;
+		//[D. nazwa_miesiaca]
+		//return "[".$dzienMiesiaca.". ".$nazwaMiesiaca."]";
+		return $dzienMiesiaca.". ".$nazwaMiesiaca;
+		//return $this->aktualny_czas->format('d-m');
 	}
 
 	public function set_wyklad($wyklad){

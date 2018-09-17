@@ -12,6 +12,7 @@ $phpWord->addTableStyle('czesci-tablica', array());
 $formatKropki=array('name'=>'Symbol','size'=>12);
 //          \_FORMAT CZCIONKI
 $fontTytul=array('name'=>'Calibri','size'=>11);
+$fontTytulWykladu=array('name'=>'Calibri','size'=>14,'bold'=>true,'color'=>'2E86C1');
 $fontProwadzacy=array('name'=>'Calibri','size'=>10);
 $fontCzas=array('name'=>'Calibri','size'=>7,'color'=>'A4A4A4');
 $fontRola=array('name'=>'Calibri','size'=>8,'color'=>'A4A4A4','textAlignment'=>'right');
@@ -28,6 +29,7 @@ $kolorZycie='961526';
 $stylPrzerwy=array('name'=>'Calibri','size'=>6);
 //WYSOKOŚĆ
 $wWie=\PhpOffice\PhpWord\Shared\Converter::cmToTwip(0.51);
+$wWieWyklad=\PhpOffice\PhpWord\Shared\Converter::cmToTwip(1.01);
 //DŁUGOŚCI
 $dlPoleCzas=\PhpOffice\PhpWord\Shared\Converter::cmToTwip(1.14);
 $dlPoleUwagiWstepne=\PhpOffice\PhpWord\Shared\Converter::cmToTwip(18.29);

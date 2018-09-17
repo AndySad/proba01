@@ -2,8 +2,6 @@
 //KROPKA W KOLORZE SLUZBY
 $formatKropki['color']=$kolorSluzba;
 
-$section->addTextBreak(1,$stylPrzerwy);
-
 $table = $section->addTable('czesci-tablica');
 
 //STRAŻNICA - prowadzący]
@@ -30,4 +28,5 @@ $komorkaModlitwy=$table->addCell($dlPoleProwadzacy,array('valign' => 'center'))-
     }
 
 
+$section->addTextBreak(1,$stylPrzerwy);
 $section->addTextBreak(1,$stylPrzerwy);
