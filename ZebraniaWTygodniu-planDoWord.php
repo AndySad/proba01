@@ -17,6 +17,7 @@ require_once 'bootstrap.php';
 	}
 	//$konfiguracja=new konfiguracja(($nazwa,$chzis_dzien,$chzis_godzina,$chzis_minuta);
 	$konfiguracja=new konfiguracja('Warszawa-Bielany',array(3,18,30),array(7,10,00));
+	#$konfiguracja=new konfiguracja('Płońsk-Północ',array(2,18,30),array(7,10,00));
 	$zebranie=new zebranie();
 
 ?>

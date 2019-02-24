@@ -162,9 +162,9 @@ function daj_sql_tydzien(){
 	if (isset($wynik_id[0])) {
 		$tydzien_id=$wynik_id[0]["id"];
 		$komentarz=" <span style=\"color:red;font-size:20px;\">DUPLIKAT</span>!";
-		$sql_wyczysc_punkty_uczestnicy="DELETE FROM `punkty_uczestnicy` WHERE tydzien_id=$tydzien_id;";
-		$stmt=$dbo->prepare($sql_wyczysc_punkty_uczestnicy);
-		$stmt->execute();
+		//$sql_wyczysc_punkty_uczestnicy="DELETE FROM `punkty_uczestnicy` WHERE tydzien_id=$tydzien_id;";
+		//$stmt=$dbo->prepare($sql_wyczysc_punkty_uczestnicy);
+		//$stmt->execute();
 		$sql_wyczysc_punkty="DELETE FROM `punkty` WHERE tydzien_id=$tydzien_id;";
 		$stmt=$dbo->prepare($sql_wyczysc_punkty);
 		$stmt->execute();
@@ -224,21 +224,21 @@ function zapisz_punkty_zebrania($tydzien_id,$zebranie){
 		zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"SKARBY",
 			$skarby_punkt['tytul'],$skarby_punkt['czas'],$skarby_punkt['opis'])
 		);
-		zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
+		//zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
 	}
 	//ULEPSZAJMY SWĄ SŁUŻBĘ
 	foreach($zebranie->get_punkty_sluzby() as $sluzba_punkt){
 		zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"SŁUŻBA",
 			$sluzba_punkt['tytul'],$sluzba_punkt['czas'],$sluzba_punkt['opis'])
 		);
-		zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
+		//zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
 	}
 	//CHRZEŚCIJAŃSKI TRYB ŻYCIA
 	foreach($zebranie->get_punkty_zycia() as $zycie_punkt){
 		zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"ŻYCIE",
 			$zycie_punkt['tytul'],$zycie_punkt['czas'],$zycie_punkt['opis'])
 		);
-		zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
+		//zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
 	}
 }
 function zapisz_punkt($sql_punkt){

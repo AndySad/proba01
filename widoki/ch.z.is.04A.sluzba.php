@@ -26,13 +26,13 @@ $table = $section->addTable('czesci-tablica');
             //labelka UCZESTNIK:
             $etykieta=array("Uczestnik:");
             $uczestnik=array($punkt['uczestnik']);
-            if (strrpos($punkt['tytul'],"Przemówienie")===false or $punkt['pomocnik'] != ''){
+            if (strrpos($punkt['tytul'],"Przemówienie")===false or $punkt['pomocnik'] != ''){ //2019 pojawia się omówienie broszury "Przykładaj się ...
                 array_push($etykieta,"Pomocnik:");
                 array_push($uczestnik,$punkt['pomocnik']);
             } 
             if (strrpos($punkt['tytul'],"film")){
                 $etykieta=array();
-                $uczestnik=array($zebranie->get_przewodniczacy());
+                //$uczestnik=array($zebranie->get_przewodniczacy());
             }
             //$table->addCell($dlPoleTekstUczestnik,array('valign' => 'center'))->addText($etykieta,$fontRola,$akapitRola);
             $komorkaEtykiet=$table->addCell($dlPoleTekstUczestnik,array('valign' => 'center'))->addTextRun($akapitRola);
