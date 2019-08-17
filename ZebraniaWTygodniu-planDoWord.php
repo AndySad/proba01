@@ -54,7 +54,6 @@ require_once 'bootstrap.php';
 <?php
 	echo "<pre>";
 	print_r($konfiguracja);
-	print_r($zebranie);
 	echo "</pre>";
 
 	if(isset($_POST['okres'])){
@@ -113,7 +112,7 @@ require_once 'bootstrap.php';
 	    	while ($rowPunkty = $punkty->fetch(PDO::FETCH_ASSOC)){
 				$zebranie->set_punkt_zycia($rowPunkty['tytul'],$rowPunkty['opis'],$rowPunkty['czas'],$rowPunkty['uczestnik'],$rowPunkty['pomocnik']);	    		
 	    	}
-
+		
 //wprowadzenie: dzień zebrania, rozdziały do czyatnia i przewodniczący,
 include "widoki/ch.z.is.01.wprowadzenie.php";
 //wprowadzenie: pieśń nr 1, modlitwa i uwagi wstępne
@@ -126,11 +125,6 @@ include "widoki/ch.z.is.04A.sluzba.php";
 //chrześcijańskie życie
 //include "widoki/ch.z.is.05.zycie.php";
 include "widoki/ch.z.is.05A.zycie.php";
-/*
-			echo "<pre>";
-			print_r($zebranie);
-			echo "</pre>";
-*/
 	    	$licznikTygodni++;
 	    	$stopka.=$licznikTygodni;
 	    	if ($licznikTygodni%$ileTygodniNaKartke) {
@@ -146,8 +140,13 @@ include "widoki/ch.z.is.05A.zycie.php";
 
 	    	}
 	    	printf("%s [%d]<br>",$row['tydzien_od'],$row['id']);
-	    	//echo $row['tydzien_od']."<br />";
-	    	if (!($licznikTygodni%$ileTygodniNaKartke)) {
+/*
+			echo "<pre>";
+			print_r($zebranie);
+			echo "<br /></pre>";
+*/
+
+			if (!($licznikTygodni%$ileTygodniNaKartke)) {
 	    		echo "tydzień $stopka<br />";
 	    		$stopka="";
 	    	}

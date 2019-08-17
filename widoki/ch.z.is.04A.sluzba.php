@@ -11,29 +11,30 @@ $table = $section->addTable('czesci-tablica');
         $table->addCell($dlPoleProwadzacy,array('valign' => 'center'))->addText('Sala główna',$fontRola,$akapitTytul);
 
 //Wiersz punktów SKARBY ZE SŁOWA BOŻEGO
-
+    $pierwszyPunktSkarbow=true;
     foreach ($zebranie->get_punkty_sluzby() as $punkt){
         $table->addRow($wWie);
             //czas
             $table->addCell($dlPoleCzas,array('valign' => 'center'))->addText($zebranie->get_aktualny_czas(),$fontCzas,$akapitCzas);
+            //labelka UCZESTNIK:
+            $etykieta=array("Uczestnik:");
+            $uczestnik=array($punkt['uczestnik']);
+            
+            if (!empty($punkt['pomocnik'])){ //2019 pojawia się omówienie broszury "Przykładaj się ...
+                array_push($etykieta,"Pomocnik:");
+                array_push($uczestnik,$punkt['pomocnik']);
+            } 
+            if (strrpos($punkt['tytul'],"film") or $punkt['czas']===10){
+                $etykieta=array("");
+            }
             //tytuł
             $punktSkarby=$table->addCell($dlPoleTytulKrotki-$dlPoleTekstUczestnik,array('valign' => 'center'))->addTextRun();
                 $punktSkarby->addText(' ', $formatKropki);
                 $punktSkarby->addText($punkt['tytul']." ",$fontTytul,$akapitTytul);
                 $tekstKonca=" min)";
-                if ($punkt === end($zebranie->get_punkty_skarby())) $tekstKonca=" min lub mniej)";
+
+                //if ($punkt === end($zebranie->get_punkty_sluzby())) $tekstKonca=" min lub mniej)";
                 $punktSkarby->addText("(".$punkt['czas'].$tekstKonca,$fontTytul,$akapitTytul);
-            //labelka UCZESTNIK:
-            $etykieta=array("Uczestnik:");
-            $uczestnik=array($punkt['uczestnik']);
-            if (strrpos($punkt['tytul'],"Przemówienie")===false or $punkt['pomocnik'] != ''){ //2019 pojawia się omówienie broszury "Przykładaj się ...
-                array_push($etykieta,"Pomocnik:");
-                array_push($uczestnik,$punkt['pomocnik']);
-            } 
-            if (strrpos($punkt['tytul'],"film")){
-                $etykieta=array();
-                //$uczestnik=array($zebranie->get_przewodniczacy());
-            }
             //$table->addCell($dlPoleTekstUczestnik,array('valign' => 'center'))->addText($etykieta,$fontRola,$akapitRola);
             $komorkaEtykiet=$table->addCell($dlPoleTekstUczestnik,array('valign' => 'center'))->addTextRun($akapitRola);
             $komorkaEtykiet->addText(array_shift($etykieta),$fontRola,$akapitRola);

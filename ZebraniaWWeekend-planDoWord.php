@@ -16,7 +16,7 @@ require_once 'bootstrap.php';
 	    $okres = $_POST['okres'];
 	}
 	//$konfiguracja=new konfiguracja(($nazwa,$chzis_dzien,$chzis_godzina,$chzis_minuta);
-	$konfiguracja=new konfiguracja('Warszawa-Bielany',array(3,18,30),array(7,10,00));
+	$konfiguracja=new konfiguracja('Warszawa-Bielany',array(3,18,30),array(7,13,30));
 	$zebranie=new zebranieWeekend();
 
 ?>

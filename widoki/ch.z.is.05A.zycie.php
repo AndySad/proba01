@@ -30,7 +30,7 @@ $table = $section->addTable('czesci-tablica');
                     $punktZycie->addText(' ', $formatKropki);
                     $punktZycie->addText($punkt['tytul']." ",$fontTytul,$akapitTytul);
                     $tekstKonca=" min)";
-                    if ($punkt === end($zebranie->get_punkty_skarby())) $tekstKonca=" min lub mniej)";
+//                    if ($punkt === end($zebranie->get_punkty_skarby())) $tekstKonca=" min lub mniej)";
                     $punktZycie->addText("(".$punkt['czas'].$tekstKonca,$fontTytul,$akapitTytul);                
                     //$table->addCell($dlPoleProwadzacy,array('valign' => 'center'))->addText($etykieta,$fontRola,$akapitRola);
                     $komorkaEtykiet=$table->addCell($dlPoleProwadzacy,array('valign' => 'center'))->addTextRun($akapitRola);
@@ -42,7 +42,7 @@ $table = $section->addTable('czesci-tablica');
                     $punktZycie->addText(' ', $formatKropki);
                     $punktZycie->addText($punkt['tytul']." ",$fontTytul,$akapitTytul);
                     $tekstKonca=" min)";
-                    if ($punkt === end($zebranie->get_punkty_skarby())) $tekstKonca=" min lub mniej)";
+//                    if ($punkt === end($zebranie->get_punkty_skarby())) $tekstKonca=" min lub mniej)";
                     $punktZycie->addText("(".$punkt['czas'].$tekstKonca,$fontTytul,$akapitTytul);
                             
             }
