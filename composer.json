@@ -10,6 +10,7 @@
     "minimum-stability": "dev",
     "require": {
         "phpoffice/phpword": "v0.14.*",
-        "nesbot/carbon": "^1.33"
+        "nesbot/carbon": "^1.33",
+        "mpdf/mpdf": "dev-master"
     }
 }
