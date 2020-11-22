@@ -22,7 +22,7 @@ $errProgramCaly = "";
 $programCaly = "";
 $tydzien_od="";
 	$skarby=array();//plan części SKARBY ZE SŁOWA BOŻEGO
-	$sluzba=array();//plan częsci ULEPSZAJMY SWĄ SŁUŻBĘ
+	$sluzba=array();//plan częsci ULEPSZAJMY SWOJĄ SŁUŻBĘ
 	$zycie=array(); //plan części CHRZEŚCIJAŃSKI TRYB ŻYCIA
 	$piesni=array();
 
@@ -83,7 +83,7 @@ function podziel_zebrania($data){
 			$skarby_czytanie=explode(": ",$program[$i])[1];
 		}
 		
-		elseif ($program[$i]=="ULEPSZAJMY SWĄ SŁUŻBĘ"){
+		elseif ($program[$i]=="ULEPSZAJMY SWOJĄ SŁUŻBĘ"){
 			$skarby_stop  =$i - 1;
 			$sluzba_start=$i + 1;
 		}
@@ -97,7 +97,7 @@ function podziel_zebrania($data){
 	$zebranie->set_piesni($GLOBALS['piesni']);
 
 	$zebranie->set_punkt_skarby(explode("(",$program[$skarby_start])[0],'',10,'');
-	$zebranie->set_punkt_skarby('Wyszukujemy duchowe skarby','',8,'');
+	$zebranie->set_punkt_skarby('Wyszukujemy duchowe skarby','',10,'');
 	$zebranie->set_punkt_skarby($skarby_czytanie,'',4,'');
 	//$zebranie->set_przemowienie(explode("(",$program[$skarby_start])[0]);
 	
@@ -226,7 +226,7 @@ function zapisz_punkty_zebrania($tydzien_id,$zebranie){
 		);
 		//zapisz_punkt(sprintf("insert into punkty_uczestnicy(tydzien_id,punkty_id,uczestnik,pomocnik,zbor) values(%s,%s,'','','%s');",$tydzien_id,$dbo->lastInsertId(),$konfiguracja->get_zbor()));
 	}
-	//ULEPSZAJMY SWĄ SŁUŻBĘ
+	//ULEPSZAJMY SWOJĄ SŁUŻBĘ
 	foreach($zebranie->get_punkty_sluzby() as $sluzba_punkt){
 		zapisz_punkt(sprintf("insert into punkty(tydzien_id,czesc,tytul,czas,opis) values(%s,'%s','%s','%s','%s');",$tydzien_id,"SŁUŻBA",
 			$sluzba_punkt['tytul'],$sluzba_punkt['czas'],$sluzba_punkt['opis'])

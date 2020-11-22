@@ -11,6 +11,7 @@
     "require": {
         "phpoffice/phpword": "v0.14.*",
         "nesbot/carbon": "^1.33",
-        "mpdf/mpdf": "dev-master"
+        "mpdf/mpdf": "dev-master",
+        "phpoffice/phpspreadsheet": "dev-master"
     }
 }

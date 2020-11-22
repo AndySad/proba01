@@ -34,7 +34,7 @@ $table = $section->addTable('czesci-tablica');
                 $tekstKonca=" min)";
 
                 //if ($punkt === end($zebranie->get_punkty_sluzby())) $tekstKonca=" min lub mniej)";
-                $punktSkarby->addText("(".$punkt['czas'].$tekstKonca,$fontTytul,$akapitTytul);
+                $punktSkarby->addText("(".$punkt['czas'].$tekstKonca,$fontTytulMaly,$akapitTytul);
             //$table->addCell($dlPoleTekstUczestnik,array('valign' => 'center'))->addText($etykieta,$fontRola,$akapitRola);
             $komorkaEtykiet=$table->addCell($dlPoleTekstUczestnik,array('valign' => 'center'))->addTextRun($akapitRola);
             $komorkaEtykiet->addText(array_shift($etykieta),$fontRola,$akapitRola);

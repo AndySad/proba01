@@ -12,6 +12,7 @@ $phpWord->addTableStyle('czesci-tablica', array());
 $formatKropki=array('name'=>'Symbol','size'=>12);
 //          \_FORMAT CZCIONKI
 $fontTytul=array('name'=>'Calibri','size'=>11);
+$fontTytulMaly=array('name'=>'Calibri','size'=>9);
 $fontTytulWykladu=array('name'=>'Calibri','size'=>14,'bold'=>true,'color'=>'2E86C1');
 $fontProwadzacy=array('name'=>'Calibri','size'=>10);
 $fontCzas=array('name'=>'Calibri','size'=>7,'color'=>'A4A4A4');

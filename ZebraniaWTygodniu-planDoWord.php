@@ -16,8 +16,9 @@ require_once 'bootstrap.php';
 	    $okres = $_POST['okres'];
 	}
 	//$konfiguracja=new konfiguracja(($nazwa,$chzis_dzien,$chzis_godzina,$chzis_minuta);
-	$konfiguracja=new konfiguracja('Warszawa-Bielany',array(3,18,30),array(7,10,00));
+	//$konfiguracja=new konfiguracja('Warszawa-Bielany',array(3,18,30),array(7,10,00));
 	#$konfiguracja=new konfiguracja('Płońsk-Północ',array(2,18,30),array(7,10,00));
+	$konfiguracja=new konfiguracja('Warszawa-Żoliborz',array(2,18,30),array(7,10,00));
 	$zebranie=new zebranie();
 
 ?>
@@ -36,6 +37,7 @@ require_once 'bootstrap.php';
 		$okresy = $dbo->query(
 			//"SELECT date_format(tydzien_od, '%Y-%m') as XX, count(*) as liczba_zebran FROM `tydzien` where tydzien_od > DATE_FORMAT(NOW() ,'%Y-%m-01') group by 1 order by 1"
 			"SELECT date_format(tydzien_od, '%Y-%m') as XX, count(*) as liczba_zebran FROM `tydzien` where tydzien_od > DATE_FORMAT(NOW() ,'%Y-%m-01') group by 1 order by 1"
+			//  "SELECT date_format(tydzien_od, '%Y-%m') as XX, count(*) as liczba_zebran FROM `tydzien` where tydzien_od > '2019-12-20' group by 1 order by 1"
 			); //Run your query
 	?>
 	<form name="myform" action="" method="post">
@@ -87,8 +89,9 @@ require_once 'bootstrap.php';
 			);
 			$zebranie->set_rozdzialy($row['rozdzialy_do_czytania']);
 			$zebranie->set_piesni(array($row['piesn_1'],$row['piesn_2'],$row['piesn_3']));
-			if($konfiguracja->get_zbor()=='Warszawa-Bielany'){
-				$szablonSqlPunkty="SELECT tydzien_id, czesc, tytul, czas, opis, uczestnik, pomocnik FROM punkty WHERE czesc='%s' and tydzien_id=".$row['id']." order by id";
+			//if($konfiguracja->get_zbor()=='Warszawa-Bielany'){
+			if($konfiguracja->get_zbor()=='Warszawa-Żoliborz'){
+					$szablonSqlPunkty="SELECT tydzien_id, czesc, tytul, czas, opis, uczestnik, pomocnik FROM punkty WHERE czesc='%s' and tydzien_id=".$row['id']." order by id";
 				$zebranie->set_przewodniczacy($row['przewodniczacy']);
 				$zebranie->set_modlitwa($row['modlitwa_poczatkowa']);
 			} else {

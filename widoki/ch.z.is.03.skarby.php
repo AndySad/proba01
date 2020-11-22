@@ -20,7 +20,7 @@ $table = $section->addTable('czesci-tablica');
         $punktSkarby=$table->addCell($dlPoleTytulKrotki+$dlPoleProwadzacy,array('valign' => 'center'))->addTextRun();
             $punktSkarby->addText(' ', $formatKropki);
             $punktSkarby->addText($punkt['tytul']." ",$fontTytul,$akapitTytul);
-            $punktSkarby->addText("(".$punkt['czas']." min)",$fontTytul,$akapitTytul);
+            $punktSkarby->addText("(".$punkt['czas']." min)",$fontTytulMaly,$akapitTytul);
     //prowadzący
     $table->addCell($dlPoleProwadzacy,array('valign' => 'center'))->addText($punkt['uczestnik'],$fontProwadzacy,$akapitTytul);
     $zebranie->set_aktualny_czas($punkt['czas']);
@@ -33,7 +33,7 @@ $table = $section->addTable('czesci-tablica');
             $punktSkarby=$table->addCell($dlPoleTytulKrotki+$dlPoleProwadzacy,array('valign' => 'center'))->addTextRun();
                 $punktSkarby->addText(' ', $formatKropki);
                 $punktSkarby->addText($punkt['tytul']." ",$fontTytul,$akapitTytul);
-                $punktSkarby->addText("(".$punkt['czas']." min)",$fontTytul,$akapitTytul);
+                $punktSkarby->addText("(".$punkt['czas']." min)",$fontTytulMaly,$akapitTytul);
             //prowadzący
             $table->addCell($dlPoleProwadzacy,array('valign' => 'center'))->addText($punkt['uczestnik'],$fontProwadzacy,$akapitTytul);
             $zebranie->set_aktualny_czas($punkt['czas']);
@@ -46,7 +46,7 @@ $table = $section->addTable('czesci-tablica');
             $punktSkarby=$table->addCell($dlPoleTytulKrotki-$dlPoleTekstUczestnik,array('valign' => 'center'))->addTextRun();
                 $punktSkarby->addText(' ', $formatKropki);
                 $punktSkarby->addText($punkt['tytul']." ",$fontTytul,$akapitTytul);
-                $punktSkarby->addText("(".$punkt['czas']." min lub mniej)",$fontTytul,$akapitTytul);
+                $punktSkarby->addText("(".$punkt['czas']." min lub mniej)",$fontTytulMaly,$akapitTytul);
             //labelka UCZESTNIK:
             $table->addCell($dlPoleTekstUczestnik,array('valign' => 'center'))->addText("Uczestnik:",$fontRola,$akapitRola);
             //Uczestnik w II klasie
